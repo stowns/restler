@@ -98,6 +98,9 @@ Send json `data` via GET method.
 
 Send json `data` via POST method.
 
+### putJson(url, data, options)
+
+Send json `data` via PUT method.
 
 ### Parsers
 
@@ -123,7 +126,7 @@ Note that if you want your request body to be JSON with the `Content-Type: appli
 Also you can use `json()` and `postJson()` methods.
 * `parser` A function that will be called on the returned data. Use any of predefined `restler.parsers`. See parsers section below. Defaults to `restler.parsers.auto`.
 * `encoding` The encoding of the request body. Defaults to `"utf8"`.
-* `decoding` The encoding of the response body. For a list of supported values see [Buffers](http://nodejs.org/docs/latest/api/buffers.html#buffers). Additionally accepts `"buffer"` - returns response as `Buffer`. Defaults to `"utf8"`.
+* `decoding` The encoding of the response body. For a list of supported values see [Buffers](http://nodejs.org/api/buffer.html#buffer_buffer). Additionally accepts `"buffer"` - returns response as `Buffer`. Defaults to `"utf8"`.
 * `headers` A hash of HTTP headers to be sent. Defaults to `{ 'Accept': '*/*', 'User-Agent': 'Restler for node.js' }`.
 * `username` Basic auth username. Defaults to empty.
 * `password` Basic auth password. Defaults to empty.
@@ -131,6 +134,7 @@ Also you can use `json()` and `postJson()` methods.
 * `client` A http.Client instance if you want to reuse or implement some kind of connection pooling. Defaults to empty.
 * `followRedirects` If set will recursively follow redirects. Defaults to `true`.
 * `timeout` If set, will emit the timeout event when the response does not return within the said value (in ms)
+* `rejectUnauthorized` If true, the server certificate is verified against the list of supplied CAs. An 'error' event is emitted if verification fails. Verification happens at the connection level, before the HTTP request is sent. Default true.
 
 
 Example usage
@@ -203,6 +207,12 @@ client.update('Tweeting using a Restler service thingy').on('complete', function
 // post JSON
 var jsonData = { id: 334 };
 rest.postJson('http://example.com/action', jsonData).on('complete', function(data, response) {
+  // handle response
+});
+
+// put JSON
+var jsonData = { id: 334 };
+rest.putJson('http://example.com/action', jsonData).on('complete', function(data, response) {
   // handle response
 });
 
